@@ -1,0 +1,5 @@
+Date: 08/09/2020
+
+
+Hoje desenvolvi o levantamento de requisitos. Senti uma certa dificuldade para dar andamento pois foi enviadas algumas duvidas para o time e não houve resposta, porém dei continuidade no que é de se imaginar que o cliente deseja. Foi compartilhado as ferramentas nescessarias para acompanhamento do projeto como trello, github e google docs.
+
