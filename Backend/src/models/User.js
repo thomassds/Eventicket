@@ -5,12 +5,11 @@ class User extends Model {
   static init(sequelize) {
     super.init(
       {
-        avatar: DataTypes.STRING,
         name: DataTypes.STRING,
         email: DataTypes.STRING,
         password: DataTypes.VIRTUAL,
         password_hash: DataTypes.STRING,
-        phone: DataTypes.INTEGER,
+        phone: DataTypes.STRING,
         type: DataTypes.BOOLEAN
       },
       {
@@ -26,6 +25,11 @@ class User extends Model {
     );
   }
   
+  static associate(models) {
+    this.hasMany(models.Event, { foreignKey: 'user_id', as: 'events' });
+    this.hasMany(models.Buy, { foreignKey: 'user_id', as: 'buys' });
+
+  }
   
 }
   User.prototype.checkPassword = function(password){
