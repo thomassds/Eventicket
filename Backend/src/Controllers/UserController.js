@@ -15,5 +15,13 @@ module.exports= {
         const user = await User.findByPk(user_id);
         
         return res.json(user);
+    },
+
+    async email(req, res){
+        const { email } = req.params;
+
+        const user = await User.findAll({where: {email}});
+        
+        return res.json(user);
     }
 }

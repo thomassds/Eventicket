@@ -10,6 +10,7 @@ const routes = express.Router();
 
 routes.post('/users', UserController.store);
 routes.get('/users/:user_id', UserController.index);
+routes.get('/user/:email', UserController.email);
 
 routes.get('/address/:address_id', AddressController.index);
 
