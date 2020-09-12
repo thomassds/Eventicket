@@ -23,7 +23,7 @@ module.exports= {
     async index(req, res){
         const { event_id } = req.params;
 
-        const event = await Event.findByPk(event_id, {include: { association: 'hasProducst'}});
+        const event = await Event.findByPk(event_id, {include: { association: 'hasProducts'}});
     
         return res.json(event);
     },
