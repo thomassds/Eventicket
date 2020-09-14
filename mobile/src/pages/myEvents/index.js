@@ -4,26 +4,32 @@ import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
 import calendar from '../../assets/calendar.png';
 import peoples from '../../assets/peoples.png';
-import money from '../../assets/money.png';
+import mais from '../../assets/mais.png';
 import api from '../../services/api';
-import { View, Text, Image, TextInput, TouchableOpacity, FlatList} from 'react-native';
-
-
+import { View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
+import { useRoute } from '@react-navigation/native';
 
 export default function Events ( { navigation } ) {
     const [events, setEvents] = useState([]);
+    const route = useRoute();
+    const user = route.params
+    
+    function navigateToRegisterEvent(){
+        navigation.navigate('Novo Evento')
+    }
 
     function navigateToDetail(event) {
-        navigation.navigate('Detalhes', { event });
+        navigation.navigate('Gerenciar', { event });
     }
 
     async function loadEvents() {
-        const response = await api.get('events');
-        setEvents(response.data);
+        const response = await api.get('users/1/events');
+        setEvents(response.data.events);
     }
 
     useEffect(() => {
         loadEvents();
+        console.log(user)
     }, [])
     return(
         <View style={styles.container}>
@@ -32,12 +38,13 @@ export default function Events ( { navigation } ) {
                     <Image style={styles.menu} source={menuImg}/>
                 </TouchableOpacity>
                 <Image style={styles.logo} source={logoImg}/>
+                <TouchableOpacity onPress={( ) => navigateToRegisterEvent()}>
+                    <Image style={styles.menu} source={mais}/>
+                </TouchableOpacity>
             </View>
 
             <View style={styles.events}>
-                <TextInput  style={styles.search} placeholder={'Procurar Evento'}/>
-
-                
+                    
                 <FlatList
                     data={events}
                     style={styles.eventList}

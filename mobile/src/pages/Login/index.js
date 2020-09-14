@@ -6,21 +6,34 @@ import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
 
 
+
 export default function Login () {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const [user, setUser] = useState();
     const navigation = useNavigation();
 
-    function navigateToEvents() {
-        navigation.navigate('Root');
+    function navigateToEvents(user) {
+        navigation.navigate('Client', {user});
+    }
+    function navigateTomyEvents() {
+        navigation.navigate('Productor', {user});
+    }
+
+    function navigatetoRegister() {
+        navigation.navigate('RegisterUser');
     }
 
     async function authentication() {
         const data = {email, password}
         try{
             const response = await api.post(`signin`, data);
-            navigateToEvents();
+            setUser(response.data)
+            if(user.type == true){
+                navigateTomyEvents(user)
+            }else{
+                navigateToEvents(user);
+            }
         }
             catch{
         alert('Usuario ou senha invalidos')
@@ -51,7 +64,7 @@ export default function Login () {
                     <Text style={[styles.buttonReset, { marginTop: 0}]}>Esqueci minha senha?</Text>
                 </TouchableOpacity> 
 
-                <TouchableOpacity>  
+                <TouchableOpacity onPress={() => navigatetoRegister()}>  
                     <Text style={[styles.buttonNew, { marginTop: 0}]}>Ainda não possui cadastro?  Clique aqui!</Text>
                 </TouchableOpacity> 
             </View>

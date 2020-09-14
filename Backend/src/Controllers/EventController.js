@@ -4,14 +4,14 @@ const Address = require('../models/Address')
 module.exports= {
     async store(req, res){
         const { user_id } = req.params;
-        const {  name,description, date, start_time, finish_time, amount, amount_sales, zip_code, state, city, neighborhood,  street, complement, number} = req.body;
+        const {  event:{name,description, date, start_time, finish_time, amount, amount_sales}, zip_code, state, city, neighborhood,  street, complement, number} = req.body;
 
         const user = await User.findByPk(user_id);
         if(!user | user.type ==0){
             return res.status(400).json({ error: 'User not found'});
         }
 
-        
+        console.log(zip_code)
         const [address] = await Address.findOrCreate({
             where:{
                 zip_code, state, city, neighborhood,  street, complement, number

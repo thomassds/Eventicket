@@ -6,8 +6,10 @@ const Buy = require('../models/Buy');
 module.exports= {
     async store(req, res){
         const { event_id } = req.params;
-        const { description, amount, amount_sales, value} = req.body;
+        const { description, amount, value} = req.body;
+        const amount_sales = 0;
 
+        
         const event = await Event.findByPk(event_id)
         if( !event ) {
             return res.status(400).json({ error: 'Event not found'});

@@ -66,7 +66,7 @@ export default StyleSheet.create({
         width: 250,
         borderRadius: 10,
         backgroundColor: '#F4A528',
-        marginTop: 20,
+        marginTop: 50,
         marginBottom: 15,
         marginHorizontal: 40
     },
@@ -85,7 +85,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        marginBottom: 20,
+        marginTop: 20,
     },
     descriptionTicket:{
         marginLeft: 10,
@@ -105,7 +105,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color:'#FFFFFF',
-        marginLeft: 95    
+        marginLeft: 152    
     },
     valueTicket:{
         fontSize: 16,

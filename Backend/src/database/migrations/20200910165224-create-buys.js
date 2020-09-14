@@ -24,6 +24,10 @@ module.exports = {
         type: Sequelize.DOUBLE,
         allowNull: false
       },
+      amount:{
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,

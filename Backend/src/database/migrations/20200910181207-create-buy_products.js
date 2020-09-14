@@ -23,8 +23,12 @@ module.exports = {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
-      status:{
+      amount_buy:{
         type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      status:{
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       created_at: {
