@@ -6,7 +6,7 @@ const Buy = require('../models/Buy');
 module.exports= {
     async store(req, res){
         const { event_id } = req.params;
-        const { description, amount, value} = req.body;
+        const { event_name, event_date, description, amount, value} = req.body;
         const amount_sales = 0;
 
         
@@ -16,7 +16,7 @@ module.exports= {
         }
 
         const product = await Product.findOrCreate({
-            where:{ event_id, description, amount, amount_sales, value }
+            where:{ event_date, event_name,event_id, description, amount, amount_sales, value }
         })
 
         return res.json(product)

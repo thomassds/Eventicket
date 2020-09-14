@@ -7,13 +7,12 @@ import api from '../../services/api';
 
 
 function RegisterUser({ navigation }) {
-    const [name, seetName] = useState('');
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');
     const [ phone, setPhone ] = useState({});
     const [type, setType] = useState(false)
-    const [data, setData] = useState({});
 
     function navigateToLogin() {
         navigation.navigate('Login');
@@ -21,19 +20,19 @@ function RegisterUser({ navigation }) {
     }
 
     async function register(){
-        if(!email | !password | !confPassword | !phone | !type){
-            return alert('Digite todos os campos.')
-        }
+        // if(!email | !password | !confPassword | !phone | !type){
+        //     console.log(name, email, password, phone, type)
+        //     return alert('Digite todos os campos.')
+        // }
         const response = await api.get(`user/${email}`)
-        if(response){
+        if(response.data[0]){
             return alert('Email ja cadastrado.')
         }
         if(password !== confPassword){
             return alert('As senhas precisam ser iguais.');
         }
-        setData({ name, email, password, phone, type})
         try{
-        const response = await api.post('users', data)
+        const response = await api.post('users', { name, email, password, phone, type})
         alert('Cadastrado com sucesso. Porfavor, faça login para acessar')
         navigateToLogin()
         
@@ -55,7 +54,7 @@ function RegisterUser({ navigation }) {
             <View style={styles.form}>
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Nome</Text>
-                        <TextInput placeholder={'Nome'} style={styles.description} onChangeText={text => seetName(text)}/>
+                        <TextInput placeholder={'Nome'} style={styles.description} onChangeText={text => setName(text)}/>
                     </View>
 
                     <View style={styles.infoValue}>
@@ -65,12 +64,12 @@ function RegisterUser({ navigation }) {
 
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Senha</Text>
-                        <TextInput placeholder={'Senha'} style={styles.description} onChangeText={text => setPassword(text)}/>
+                        <TextInput placeholder={'Senha'} style={styles.description} secureTextEntry={true} onChangeText={text => setPassword(text)}/>
                     </View>
 
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Confirmação de Senha</Text>
-                        <TextInput placeholder={'Confirmação'} style={styles.description} onChangeText={text => setConfPassword(text)}/>
+                        <TextInput placeholder={'Confirmação'} style={styles.description} secureTextEntry={true} onChangeText={text => setConfPassword(text)}/>
                     </View>
                     
                     <View style={styles.final}>

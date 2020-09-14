@@ -4,7 +4,7 @@ import styles from './styles';
 import logoImg from '../../assets/login.png';
 import { useNavigation } from '@react-navigation/native';
 import api from '../../services/api';
-
+import { AsyncStorage } from 'react-native';
 
 
 export default function Login () {
@@ -28,8 +28,11 @@ export default function Login () {
         const data = {email, password}
         try{
             const response = await api.post(`signin`, data);
-            setUser(response.data)
-            if(user.type == true){
+            await AsyncStorage.setItem(
+                'user_id',
+                `${response.data.id}`
+              );
+            if(response.data.type == true){
                 navigateTomyEvents(user)
             }else{
                 navigateToEvents(user);

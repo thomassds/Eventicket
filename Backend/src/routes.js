@@ -20,6 +20,7 @@ routes.post('/users/:user_id/events', EventController.store);
 routes.get('/users/:user_id/events', EventController.index);
 routes.get('/events', EventController.indexAll);
 
+
 routes.get('/events/:event_id/products', ProductController.index);
 routes.post('/events/:event_id/products', ProductController.store);
 

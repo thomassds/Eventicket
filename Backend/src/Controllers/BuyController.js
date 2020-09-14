@@ -1,7 +1,8 @@
 const Buy  = require('../models/Buy');
 const User = require('../models/User');
 const Product = require('../models/Product');
-
+const Event = require('../models/Event');
+const { urlencoded } = require('express');
 module.exports= {
     async store(req, res){
         const { user_id } = req.params;
@@ -27,17 +28,27 @@ module.exports= {
             await buy.addProduct([product[i].id])
         }
         
-
         return res.json(buy)
+        },
+        
+        async update(req, res){
+
         },
 
     async index(req, res){
         const { user_id, } = req.params;
-        
+        const products=[];
         const user = await User.findByPk(user_id, {
             include: { association: 'buys'}
         });
 
-        return res.json(user);
+        for(var i = 0; i < user.buys.length; i++){
+            const buy = await Buy.findByPk(user.buys[i].id, { include: { association: 'products' }})
+            for(var i = 0; i< buy.products.length; i++){
+                products.push(buy.products[i])
+            }
+        }
+        
+        return res.json(products);
     }
 }

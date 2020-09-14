@@ -3,7 +3,7 @@ import styles from './styles';
 import { View, TouchableOpacity, Image, TextInput, Text} from 'react-native';
 import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import api from '../../services/api';
 function registerProducts({ navigation }) {
     const [description, setDescription] = useState('');
@@ -18,7 +18,7 @@ function registerProducts({ navigation }) {
     }
 
     async function register(event_id){
-        setData({ description, amount, value})
+        setData({ event_name : event.name, event_date : event.date, description, amount, value})
         try{
         const response = await api.post(`events/${event_id}/products`, data)        
         navigateTomanageEvent();
@@ -26,7 +26,6 @@ function registerProducts({ navigation }) {
         catch{
             alert('Erro, porfavor tente novamente.')
         }
-        
     }
   return (
         <View style={styles.container}>

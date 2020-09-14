@@ -7,7 +7,7 @@ import peoples from '../../assets/peoples.png';
 import money from '../../assets/money.png';
 import api from '../../services/api';
 import { View, Text, Image, TextInput, TouchableOpacity, FlatList} from 'react-native';
-
+import { format, parseISO } from 'date-fns';
 
 
 export default function Events ( { navigation } ) {
@@ -25,6 +25,9 @@ export default function Events ( { navigation } ) {
     useEffect(() => {
         loadEvents();
     }, [])
+    useEffect(() => {
+        
+    }, [events])
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -54,7 +57,7 @@ export default function Events ( { navigation } ) {
                             <View style={ styles.info}>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={calendar}/>
-                                <Text style={ styles.infos}>{event.date}</Text>
+                                <Text style={ styles.infos}>{format(parseISO(event.date),'dd/MM/yyyy')}</Text>
                                 </View>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={peoples}/>

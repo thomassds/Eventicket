@@ -24,7 +24,7 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       amount_buy:{
-        type: Sequelize.BOOLEAN,
+        type: Sequelize.INTEGER,
         allowNull: false,
       },
       status:{

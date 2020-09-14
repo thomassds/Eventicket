@@ -7,7 +7,6 @@ class Event extends Model {
           name: DataTypes.STRING,
           description: DataTypes.STRING,
           date: DataTypes.DATE,
-          start_time: DataTypes.DATE,
           finish_time: DataTypes.DATE,
           amount: DataTypes.INTEGER,
           amount_sales: DataTypes.INTEGER,

@@ -29,8 +29,9 @@ export default StyleSheet.create({
     },
     name:{
         fontSize: 24,
-        color: '#000000',
+        color: '#41414d',
         fontWeight: 'bold',
+        textAlign: 'center'
     },
     description:{
         color: '#41414d',

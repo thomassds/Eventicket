@@ -1,14 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState} from 'react';
 import styles from './styles';
 import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
 import calendar from '../../assets/calendar.png';
 import ticketsAmount from '../../assets/ticketsAmount.png';
 import { View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
+import api from '../../services/api';
+import { AsyncStorage } from 'react-native';
 
+
+
+    
 
 export default function Tickets ( { navigation } ) {
+    const [products, setProducts] = useState([])
+    async function loadTickets(){
+        try{
+            const user_id = await AsyncStorage.getItem('user_id');
+            const response = await api.get(`users/${user_id}/buys`)
+            setProducts(response.data)
+        }catch{
+            
+        }
+    }
 
+    useEffect(() => {
+        loadTickets();
+    }, [])
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -20,25 +38,27 @@ export default function Tickets ( { navigation } ) {
 
             <View style={styles.events}>
                 <FlatList
-                    data={[1,2]}
+                    data={products}
                     style={styles.eventList}
-                    keyExtractor={event => String(event)}
+                    keyExtractor={product => String(product)}
                     showsVerticalScrollIndicator={ false }
-                    renderItem={( ) => (
+                    renderItem={({ item: product }) => (
                         <View style={ styles.event}>
                             <View style={ styles.title}>
-                                <Text style={ styles.name}>LollaPalooza</Text>
-                                <Text style={ styles.description}>Festival de Musica</Text>
+                            <Text style={ styles.name}>{product.description}</Text>
+                                <Text style={ styles.description}>{product.event_name}</Text> 
                             </View>
 
                             <View style={ styles.info}>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={calendar}/>
-                                    <Text style={ styles.infos}>20/10/2020</Text>
+                                    <Text style={ styles.infos}>{product.event_date}</Text>
                                 </View>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={ticketsAmount}/>
-                                    <Text style={ styles.infos}>5</Text>
+                                    <Text style={ styles.infos}>{Intl.NumberFormat('pt-BR', {
+                                    style: 'currency', currency: 'BRL'
+                                    }).format(product.value)}</Text>
                                 </View>
                             </View>
                         </View>

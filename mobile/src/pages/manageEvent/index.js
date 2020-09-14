@@ -8,8 +8,9 @@ import clockImg from '../../assets/relogio.png';
 import calendarImg from '../../assets/calendar.png';
 import peoplesImg from '../../assets/peoples.png';
 import editImg from '../../assets/editar.png';
-import { useRoute } from '@react-navigation/native';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 import api from '../../services/api';
+import { format, parseISO } from 'date-fns';
 
 
 
@@ -41,10 +42,13 @@ export default function Detail ( { navigation } ) {
     }
 
     
-
+    useFocusEffect(
+        React.useCallback(() => {
+            loadTickets(); 
+        }, [event])
+    );
 
     useEffect(() => {
-        loadTickets();  
     }, []);
 
     return (
@@ -68,7 +72,7 @@ export default function Detail ( { navigation } ) {
                     <View style={ styles.column}>
                         <View style={ styles.details}>
                             <Image style={styles.icon} source={calendarImg}/>
-                            <Text style={ styles.infos}>{event.date}</Text>
+                            <Text style={ styles.infos}>{format(parseISO(event.date),'dd/MM/yyyy')}</Text>
                         </View>
 
                         <View style={ styles.details}>

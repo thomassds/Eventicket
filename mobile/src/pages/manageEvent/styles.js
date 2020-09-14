@@ -29,8 +29,9 @@ export default StyleSheet.create({
     },
     name:{
         fontSize: 24,
-        color: '#000000',
+        color: '#41414d',
         fontWeight: 'bold',
+        textAlign: 'center'
     },
     description:{
         color: '#41414d',
@@ -66,7 +67,7 @@ export default StyleSheet.create({
         width: 250,
         borderRadius: 10,
         backgroundColor: '#F4A528',
-        marginTop: 50,
+        marginTop: 20,
         marginBottom: 15,
         marginHorizontal: 40
     },
@@ -105,7 +106,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         color:'#FFFFFF',
-        marginLeft: 152    
+        marginLeft: 169   
     },
     valueTicket:{
         fontSize: 16,

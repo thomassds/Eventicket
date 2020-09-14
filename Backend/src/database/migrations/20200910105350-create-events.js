@@ -35,10 +35,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false,
       },
-      start_time: {
-        type: Sequelize.DATE,
-        allowNull: false,
-      },
       finish_time:{
         type: Sequelize.DATE,
         allowNull: false

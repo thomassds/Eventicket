@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useDebugValue} from 'react';
+import React, { useState, useEffect, } from 'react';
 import { View, TouchableOpacity, Image, Text,TextInput, FlatList} from 'react-native';
 import styles from './styles';
 import logoImg from '../../assets/logo.png';
@@ -11,7 +11,8 @@ import maisImg from '../../assets/mais.png';
 import menosImg from '../../assets/menos.png';
 import { useRoute } from '@react-navigation/native';
 import api from '../../services/api';
-
+import { AsyncStorage } from 'react-native';
+import { format, parseISO } from 'date-fns';
 
 
 export default function Detail ( { navigation } ) {
@@ -20,12 +21,14 @@ export default function Detail ( { navigation } ) {
     const [ data, setData ] = useState({});
     const route = useRoute();
     const event = route.params.event;
+    
 
     function navigateToEvents() {
         navigation.navigate('Eventos');
     }
 
     async function loadTickets() {
+        
         const response = await api.get(`events/${event.id}/products`);
 	    if(response.data.hasProducts) {
 		    const newTickets = response.data.hasProducts.map((t) => {
@@ -67,13 +70,16 @@ export default function Detail ( { navigation } ) {
     async function checkout(){
         if( value == 0){
             return alert('Escola a quantidade de ingressos que deseja comprar')
-            
+        }
+        if((event.amount_sales + value) > event.amount){
+            return alert(`Possuem apenas ${event.amount - event.amount_sales} para vender}`)
         }
         const amount_value = value
-        setData({value,amount_value,  tickets})
+        setData({value,amount_value, tickets})
         
         try{
-            const response = await api.post('/users/1/buys', data);
+            const user_id = await AsyncStorage.getItem('user_id');
+            const response = await api.post(`/users/${user_id}/buys`, data);
             alert('Compra realizada com sucesso')
             navigateToEvents();
         }
@@ -82,15 +88,15 @@ export default function Detail ( { navigation } ) {
         }
     }
     
-
+    
+    
+    useEffect(() => {
+        loadTickets() 
+    }, [event]);
 
     useEffect(() => {
-        loadTickets();  
-    }, []);
 
-    useEffect(() => {
-
-    }, [ tickets ])
+    }, [  tickets ])
 
     return (
         <View style={styles.container}>
@@ -113,13 +119,9 @@ export default function Detail ( { navigation } ) {
                     <View style={ styles.column}>
                         <View style={ styles.details}>
                             <Image style={styles.icon} source={calendarImg}/>
-                            <Text style={ styles.infos}>{event.date}</Text>
+                            <Text style={ styles.infos}>{format(parseISO(event.date),'dd/MM/yyyy')}</Text>
                         </View>
 
-                        <View style={ styles.details}>
-                            <Image style={styles.icon} source={clockImg}/>
-                            <Text style={ styles.infos }>{event.start_time}</Text>
-                        </View>
                     </View>
                     <View style={ styles.column}>
                         <View style={ styles.details}>
@@ -129,7 +131,7 @@ export default function Detail ( { navigation } ) {
 
                         <View style={ styles.details}>
                             <Image style={styles.icon} source={clockImg}/>
-                            <Text style={ styles.infos}>{event.finisht_time}</Text>
+                            <Text style={ styles.infos}>{format(parseISO(event.finish_time),'dd/MM/yyyy')}</Text>
                         </View>
                     </View>
                 </View>

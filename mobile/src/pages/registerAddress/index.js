@@ -5,6 +5,7 @@ import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
 import { useRoute } from '@react-navigation/native';
 import api from '../../services/api';
+import { AsyncStorage } from 'react-native';
 
 
 function registerAddress({ navigation }) {
@@ -15,8 +16,6 @@ function registerAddress({ navigation }) {
     const [ street , setStreet ] = useState('');
     const [complement, setComplement] = useState('')
     const [number, setNumber] = useState();
-    const [data, setData] = useState([]);
-
     const route = useRoute();
     const event = route.params.event;
 
@@ -26,12 +25,13 @@ function registerAddress({ navigation }) {
     }
 
     async function register(){
-        setData({ event, zip_code, state, city, neighborhood, street, complement, number})
+        console.log(event)
         if(!event | !zip_code | !state | !city | !neighborhood | !street | !complement | !number){
             return alert('Preencha todos os campos')
         }
         try{
-        const response = await api.post(`users/3/events`, data);
+        const user_id = await AsyncStorage.getItem('user_id');
+        const response = await api.post(`users/${user_id}/events`, { event, zip_code, state, city, neighborhood, street, complement, number});
         alert('Evento cadastrado com sucesso!')
         navigateToMyEvents();
         }

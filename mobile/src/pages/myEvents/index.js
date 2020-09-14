@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import styles from './styles';
 import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
@@ -6,13 +7,12 @@ import calendar from '../../assets/calendar.png';
 import peoples from '../../assets/peoples.png';
 import mais from '../../assets/mais.png';
 import api from '../../services/api';
-import { View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, Image, TouchableOpacity, FlatList, AsyncStorage} from 'react-native';
+import { format, parseISO } from 'date-fns';
 
 export default function Events ( { navigation } ) {
     const [events, setEvents] = useState([]);
-    const route = useRoute();
-    const user = route.params
+
     
     function navigateToRegisterEvent(){
         navigation.navigate('Novo Evento')
@@ -23,14 +23,16 @@ export default function Events ( { navigation } ) {
     }
 
     async function loadEvents() {
-        const response = await api.get('users/1/events');
+        const user_id = await AsyncStorage.getItem('user_id');
+        const response = await api.get(`users/${user_id}/events`);
         setEvents(response.data.events);
     }
 
-    useEffect(() => {
-        loadEvents();
-        console.log(user)
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            loadEvents();
+        }, [])
+      );
     return(
         <View style={styles.container}>
             <View style={styles.header}>
@@ -61,7 +63,7 @@ export default function Events ( { navigation } ) {
                             <View style={ styles.info}>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={calendar}/>
-                                <Text style={ styles.infos}>{event.date}</Text>
+                                <Text style={ styles.infos}>{format(parseISO(event.date),'dd/MM/yyyy')}</Text>
                                 </View>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={peoples}/>

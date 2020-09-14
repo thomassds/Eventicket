@@ -1,6 +1,7 @@
 const Event  = require('../models/Event');
 const User = require('../models/User');
-const Address = require('../models/Address')
+const Address = require('../models/Address');
+const { update } = require('../models/User');
 module.exports= {
     async store(req, res){
         const { user_id } = req.params;
@@ -41,6 +42,5 @@ module.exports= {
 
         return res.json(event);
     }
-
     
 }
