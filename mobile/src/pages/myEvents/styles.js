@@ -21,6 +21,7 @@ export default StyleSheet.create({
     },
     eventList:{
         marginTop: 32,
+        height: 550,
     },
     event:{
         padding: 24,

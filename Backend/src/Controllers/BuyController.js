@@ -37,18 +37,13 @@ module.exports= {
 
     async index(req, res){
         const { user_id, } = req.params;
-        const products=[];
         const user = await User.findByPk(user_id, {
             include: { association: 'buys'}
         });
+        const buy = await Buy.findAll({where:{ user_id }, include: { association: 'products'}})
 
-        for(var i = 0; i < user.buys.length; i++){
-            const buy = await Buy.findByPk(user.buys[i].id, { include: { association: 'products' }})
-            for(var i = 0; i< buy.products.length; i++){
-                products.push(buy.products[i])
-            }
-        }
         
-        return res.json(products);
+        
+        return res.json(buy);
     }
 }

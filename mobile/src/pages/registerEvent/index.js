@@ -3,9 +3,6 @@ import styles from './styles';
 import { View, TouchableOpacity, Image, TextInput, Text, CheckBox} from 'react-native';
 import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
-import { format, parse } from 'date-fns';
-import { useFocusEffect } from '@react-navigation/native';
-
 
 function registerEvent({ navigation }) {
     const [name, setName] = useState('');
@@ -13,23 +10,16 @@ function registerEvent({ navigation }) {
     const [date, setDate] = useState('');
     const [amount, setAmount] = useState('');
     const [ finish_time, setFinishTime ] = useState({});
-    const [type, setType] = useState(false)
-    const [event, setEvent] = useState({});
+    const [type, setType] = useState(false);
 
     function next(){
-        // console.log( format(parse(date, 'dd/MM/yyyy', new Date()), `yyyy-MM-dd'T'hh:mm:ss`))
-        // console.log( format(parse(finish_time, 'dd/MM/yyyy' , new Date()), `yyyy-MM-dd'T'hh:mm:ss`))
-        setEvent({name, description, date, finish_time, amount})
-        if( !name | !description | !date | !finish_time ){
-            return alert('Preencha todos os campos porfavor!')
-        }
         
-        
-        if( type === false ){
-            navigation.navigate('Address', { event })
-        }
-        navigation.navigate('Address');
- 
+        if (!name | !description | !date | !finish_time) {
+            alert("Preencha todos os campos porfavor!");
+            return;
+          }
+          
+          navigation.navigate('Address', { event : {name, description, date, finish_time, amount} })
     }
 
 
@@ -56,12 +46,12 @@ function registerEvent({ navigation }) {
 
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Data e hora de Inicio</Text>
-                        <TextInput placeholder={'Data'} style={styles.description} onChangeText={text => setDate(text)}/>
+                        <TextInput placeholder={'Data'} style={styles.description} type={ date } onChangeText={date => setDate(date)}/>
                     </View>
 
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Data e hora de Fim</Text>
-                        <TextInput placeholder={'26/10/2020 22:00'} style={styles.description} onChangeText={text => setFinishTime(text)}/>
+                        <TextInput placeholder={'26/10/2020 22:00'} type={ date }style={styles.description} onChangeText={text => setFinishTime(text)}/>
                     </View>
                     <View style={styles.final}>
                     <View style={styles.infoValue}>

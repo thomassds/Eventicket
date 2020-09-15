@@ -77,7 +77,7 @@ export default function Detail ( { navigation } ) {
 
                         <View style={ styles.details}>
                             <Image style={styles.icon} source={clockImg}/>
-                            <Text style={ styles.infos }>{event.start_time}</Text>
+                            <Text style={ styles.infos }>{format(parseISO(event.date),'hh:mm')}</Text>
                         </View>
                     </View>
                     <View style={ styles.column}>
@@ -88,7 +88,7 @@ export default function Detail ( { navigation } ) {
 
                         <View style={ styles.details}>
                             <Image style={styles.icon} source={clockImg}/>
-                            <Text style={ styles.infos}>{event.finisht_time}</Text>
+                            <Text style={ styles.infos}>{format(parseISO(event.finish_time),'dd/MM hh:mm')}</Text>
                         </View>
                     </View>
                 </View>

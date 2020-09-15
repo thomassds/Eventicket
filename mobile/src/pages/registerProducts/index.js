@@ -18,9 +18,8 @@ function registerProducts({ navigation }) {
     }
 
     async function register(event_id){
-        setData({ event_name : event.name, event_date : event.date, description, amount, value})
         try{
-        const response = await api.post(`events/${event_id}/products`, data)        
+        const response = await api.post(`events/${event_id}/products`, { event_name : event.name, event_date : event.date, description, amount, value})        
         navigateTomanageEvent();
         }
         catch{

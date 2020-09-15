@@ -33,6 +33,11 @@ info:{
 },
 infoValue:{
     marginBottom:10
+    
+},
+infoValueState:{
+    marginBottom:10,
+    textAlign: 'center'
 },
 description:{
     marginTop: 5,

@@ -18,18 +18,17 @@ export default StyleSheet.create({
     logo:{
         marginLeft: 100
     },
-    search:{
-        marginTop: 32,
-    },
+    
     eventList:{
         marginTop: 32,
+        height: 550,
+
     },
     event:{
         padding: 24,
         borderRadius: 8,
         backgroundColor: '#FFF',
         marginBottom: 16,
-        
     },
     title:{
         alignItems: 'center',

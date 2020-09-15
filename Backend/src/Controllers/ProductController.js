@@ -16,7 +16,7 @@ module.exports= {
         }
 
         const product = await Product.findOrCreate({
-            where:{ event_date, event_name,event_id, description, amount, amount_sales, value }
+            where:{ event_date, event_name, event_id, description, amount, amount_sales, value }
         })
 
         return res.json(product)

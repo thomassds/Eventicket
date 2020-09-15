@@ -7,7 +7,7 @@ import ticketsAmount from '../../assets/ticketsAmount.png';
 import { View, Text, Image, TouchableOpacity, FlatList} from 'react-native';
 import api from '../../services/api';
 import { AsyncStorage } from 'react-native';
-
+import { format, parseISO } from 'date-fns';
 
 
     
@@ -15,17 +15,25 @@ import { AsyncStorage } from 'react-native';
 export default function Tickets ( { navigation } ) {
     const [products, setProducts] = useState([])
     async function loadTickets(){
+        var data =[]
         try{
             const user_id = await AsyncStorage.getItem('user_id');
             const response = await api.get(`users/${user_id}/buys`)
-            setProducts(response.data)
-        }catch{
-            
+            for(var i = 0; i < response.data.length;i++){
+                
+                for(var x = 0; x < response.data[i].products.length; x++){
+                    data.push(response.data[i].products[x])
+                } 
+            }
+        }catch{   
         }
+        setProducts(data)
     }
+
 
     useEffect(() => {
         loadTickets();
+        
     }, [])
     return(
         <View style={styles.container}>
@@ -40,7 +48,7 @@ export default function Tickets ( { navigation } ) {
                 <FlatList
                     data={products}
                     style={styles.eventList}
-                    keyExtractor={product => String(product)}
+                    keyExtractor={product => String(product.id)}
                     showsVerticalScrollIndicator={ false }
                     renderItem={({ item: product }) => (
                         <View style={ styles.event}>
@@ -52,7 +60,7 @@ export default function Tickets ( { navigation } ) {
                             <View style={ styles.info}>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={calendar}/>
-                                    <Text style={ styles.infos}>{product.event_date}</Text>
+                                    <Text style={ styles.infos}>{format(parseISO(product.event_date),'dd/MM/yyyy')}</Text>
                                 </View>
                                 <View style={ styles.details}>
                                     <Image style={styles.icon} source={ticketsAmount}/>
