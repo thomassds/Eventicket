@@ -18,7 +18,7 @@ import { format, parseISO } from 'date-fns';
 export default function Detail ( { navigation } ) {
     const [tickets, setTickets] = useState();
     const [ value, setValue ] = useState(0);
-    const [ data, setData ] = useState({});
+    const [ total, setTotal ] = useState(0);
     const route = useRoute();
     const event = route.params.event;
     
@@ -28,7 +28,7 @@ export default function Detail ( { navigation } ) {
     }
 
     async function loadTickets() {
-        
+        setValue(0)
         const response = await api.get(`events/${event.id}/products`);
 	    if(response.data.hasProducts) {
 		    const newTickets = response.data.hasProducts.map((t) => {
@@ -44,7 +44,7 @@ export default function Detail ( { navigation } ) {
             if(t.id === id) {
                  t.amount_buy = t.amount_buy + 1,
                  setValue(value + t.value)
-                 
+                 setTotal(total + 1)
             } 
             return { ...t }
         })
@@ -60,6 +60,7 @@ export default function Detail ( { navigation } ) {
                 }
                  t.amount_buy = t.amount_buy - 1,
                  setValue(value - t.value)
+                 setTotal(total -1)
             } 
             return { ...t }
         })
@@ -68,18 +69,22 @@ export default function Detail ( { navigation } ) {
     }
 
     async function checkout(){
-        if( value == 0){
+        if( event.amount_buy == 0){
             return alert('Escola a quantidade de ingressos que deseja comprar')
         }
-        if((event.amount_sales + value) > event.amount){
-            return alert(`Possuem apenas ${event.amount - event.amount_sales} para vender}`)
+        console.log(total)
+        if(event.amount_sales == event.amount){
+            return alert('Ingressos Esgotados')
+        }
+        if((event.amount_sales + total) > event.amount){
+            return alert(`Possuem apenas ${event.amount - event.amount_sales} para vender`)
         }
         const amount_value = value
-        setData({value,amount_value, tickets})
+    
         
         try{
             const user_id = await AsyncStorage.getItem('user_id');
-            const response = await api.post(`/users/${user_id}/buys`, data);
+            const response = await api.post(`/users/${user_id}/buys`, {data: {amount_sales: event.amount_sales, event_id : event.id , value,amount_value, tickets}});
             alert('Compra realizada com sucesso')
             navigateToEvents();
         }

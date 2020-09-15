@@ -14,7 +14,8 @@ import manageEvent from './pages/manageEvent';
 import registerProducts from './pages/registerProducts';
 import registerEvent from './pages/registerEvent';
 import registerAddress from './pages/registerAddress';
-
+import editEvent from './pages/editEvent';
+import editAddress from './pages/editAddress';
 const AppStack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
@@ -23,7 +24,7 @@ function Client(){
         <Drawer.Navigator >
             <AppStack.Screen name="Eventos" component={Events}  />
             <AppStack.Screen name="Meus  Ingressos" component={Tickets}  />
-            <AppStack.Screen name="Detalhes" component={Detail}/>
+            
         </Drawer.Navigator>
     );
 }
@@ -32,8 +33,6 @@ function Productor(){
     return(
         <Drawer.Navigator >
             <AppStack.Screen name="Meus Eventos" component={myEvents}/>
-            <AppStack.Screen name="Gerenciar" component={manageEvent}/>
-            <AppStack.Screen name="RegisterProducts" component={registerProducts}/>
             <AppStack.Screen name="Novo Evento" component={registerEvent}/>
         </Drawer.Navigator>
     );
@@ -48,6 +47,12 @@ export default function App() {
             <AppStack.Screen name="Client" component={Client}  />
             <AppStack.Screen name="Productor" component={Productor}  />
             <AppStack.Screen name="Address" component={registerAddress}/>
+            <AppStack.Screen name="RegisterProducts" component={registerProducts}/>
+            <AppStack.Screen name="Novo Evento" component={registerEvent}/>
+            <AppStack.Screen name="Gerenciar" component={manageEvent}/>
+            <AppStack.Screen name="Detalhes" component={Detail}/>
+            <AppStack.Screen name="editEvent" component={editEvent}/>
+            <AppStack.Screen name="editAddress" component={editAddress}/>
         </AppStack.Navigator>
     </NavigationContainer>
   );

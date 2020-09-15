@@ -6,14 +6,15 @@ const { urlencoded } = require('express');
 module.exports= {
     async store(req, res){
         const { user_id } = req.params;
-        const { value, amount_value, tickets } = req.body;
+        const { data:{amount_sales, event_id, value, amount_value, tickets} } = req.body;
         const product =[];
         var amount = 0;
+
 
        const newTickets = tickets.map((t) => { 
             if(t.amount_buy >= 1){
                 product.push(t),
-                amount = amount + 1
+                amount = amount + t.amount_buy
             }
         })
 
@@ -24,16 +25,16 @@ module.exports= {
 
         const buy = await Buy.create({ value, amount_value, user_id, amount});
         
-        for(var i = 0; i<product.length;i++){
+        const event = await Event.update({amount_sales: (amount_sales + amount)},{ where: { id: event_id }});
+
+        for(var i = 0; i<product.length;i++){ 
+            const prod = await Product.update({ amount_sales: (product[i].amount_sales + product[i].amount_buy)}, {where: {id : product[i].id}})
             await buy.addProduct([product[i].id])
         }
         
-        return res.json(buy)
+        return res.json(product)
         },
         
-        async update(req, res){
-
-        },
 
     async index(req, res){
         const { user_id, } = req.params;

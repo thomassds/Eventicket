@@ -19,7 +19,7 @@ routes.get('/address/:address_id', AddressController.index);
 routes.post('/users/:user_id/events', EventController.store);
 routes.get('/users/:user_id/events', EventController.index);
 routes.get('/events', EventController.indexAll);
-
+routes.put('/event/:id', EventController.updated);
 
 routes.get('/events/:event_id/products', ProductController.index);
 routes.post('/events/:event_id/products', ProductController.store);

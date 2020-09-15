@@ -8,6 +8,7 @@ import money from '../../assets/money.png';
 import api from '../../services/api';
 import { View, Text, Image, TextInput, TouchableOpacity, FlatList} from 'react-native';
 import { format, parseISO } from 'date-fns';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function Events ( { navigation } ) {
@@ -22,9 +23,11 @@ export default function Events ( { navigation } ) {
         setEvents(response.data);
     }
 
-    useEffect(() => {
-        loadEvents();
-    }, [])
+    useFocusEffect(
+        React.useCallback(() => {
+            loadEvents();
+        }, [])
+      );
     useEffect(() => {
         
     }, [events])

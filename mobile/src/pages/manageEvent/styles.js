@@ -61,6 +61,9 @@ export default StyleSheet.create({
         height:25,
         width: 25
     },
+    edit:{
+       marginLeft: 285
+    },
     menuButton: {
         alignItems: 'center',
         padding: 15,

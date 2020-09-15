@@ -37,10 +37,13 @@ export default function Detail ( { navigation } ) {
     }
 
 
-    async function newTicket(event){
-        navigation.navigate('RegisterProducts', { event });
+    function newTicket(  ){
+        navigation.navigate('Novo Evento');
     }
 
+    function navigateToEditEvent(event){
+        navigation.navigate('editEvent', { event });
+    }
     
     useFocusEffect(
         React.useCallback(() => {
@@ -58,12 +61,15 @@ export default function Detail ( { navigation } ) {
                     <Image style={styles.menu} source={menuImg}/>
                 </TouchableOpacity>
                 <Image style={styles.logo} source={logoImg}/>
-                <TouchableOpacity onPress={( ) => navigateTomyEvents()}>
+                <TouchableOpacity onPress={( ) => navigateTomyEvents( event )}>
                     <Image style={styles.back} source={backImg}/>
                 </TouchableOpacity>
             </View>
 
             <View style={ styles.event}>
+                    <TouchableOpacity onPress={ () => navigateToEditEvent(event)}>
+                        <Image style={styles.edit} source={editImg}/>
+                    </TouchableOpacity>
                 <View style={ styles.title}>
                     <Text style={ styles.name}>{event.name}</Text>
                     <Text style={ styles.description}>{event.description}</Text>

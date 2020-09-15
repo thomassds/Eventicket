@@ -3,6 +3,7 @@ import styles from './styles';
 import { View, TouchableOpacity, Image, TextInput, Text, CheckBox} from 'react-native';
 import logoImg from '../../assets/logo.png';
 import menuImg from '../../assets/menu.png';
+import { useFocusEffect, useRoute } from '@react-navigation/native';
 
 function registerEvent({ navigation }) {
     const [name, setName] = useState('');
@@ -46,7 +47,7 @@ function registerEvent({ navigation }) {
 
                     <View style={styles.infoValue}>
                         <Text style={styles.info}>Data e hora de Inicio</Text>
-                        <TextInput placeholder={'Data'} style={styles.description} type={ date } onChangeText={date => setDate(date)}/>
+                        <TextInput placeholder={'26/10/2020 22:00'} style={styles.description} type={ date } onChangeText={date => setDate(date)}/>
                     </View>
 
                     <View style={styles.infoValue}>

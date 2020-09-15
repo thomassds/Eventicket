@@ -41,6 +41,16 @@ module.exports= {
         const event = await Event.findAll({include: { association: 'address'}});
 
         return res.json(event);
+    },
+    async updated(req, res){
+        const { id } = req.params
+        const {name, description, date, finish_time, amount}  = req.body
+        console.log(name)
+        const events = await Event.update({name, description, date, finish_time, amount},{ where: { id }})
+
+        return res.json(events)
     }
+
+    
     
 }
